@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect, useMemo } from "react";
 import type { ArenaBlock } from "@/lib/arena";
 import Lightbox from "./Lightbox";
+import { useSelectorOpen } from "./SelectorContext";
 
 const COL_WIDTH = 280;
 const GAP = 6;
@@ -36,6 +37,7 @@ function computeMasonry(blocks: ArenaBlock[], cols: number) {
 }
 
 export default function Canvas({ blocks }: { blocks: ArenaBlock[] }) {
+  const { selectorOpen } = useSelectorOpen();
   const containerRef = useRef<HTMLDivElement>(null);
   const tileRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [containerWidth, setContainerWidth] = useState(0);
@@ -45,6 +47,9 @@ export default function Canvas({ blocks }: { blocks: ArenaBlock[] }) {
   const [visible, setVisible] = useState(false);
 
   const pan = useRef({ x: 0, y: 0 });
+  const zoom = useRef(0.85);
+  const [zoomLevel, setZoomLevel] = useState(0.85);
+  const updateTilesRef = useRef<(() => void) | null>(null);
   const raf = useRef(0);
 
   useEffect(() => {
@@ -87,6 +92,7 @@ export default function Canvas({ blocks }: { blocks: ArenaBlock[] }) {
     if (!ready || totalW === 0 || totalH === 0) return;
 
     function updateTiles() {
+      const z = zoom.current;
       const bx = totalW > 0 ? ((pan.current.x % totalW) + totalW) % totalW : 0;
       const by = totalH > 0 ? ((pan.current.y % totalH) + totalH) % totalH : 0;
       const ox = bx - totalW + (containerWidth - totalW) / 2;
@@ -95,10 +101,12 @@ export default function Canvas({ blocks }: { blocks: ArenaBlock[] }) {
       tileRefs.current.forEach((el, i) => {
         if (!el) return;
         const [tx, ty] = tileOffsets[i];
-        el.style.transform = `translate(${ox + tx}px, ${oy + ty}px)`;
+        el.style.transform = `translate(${ox + tx}px, ${oy + ty}px) scale(${z})`;
+        el.style.transformOrigin = `${containerWidth / 2 - (ox + tx)}px ${containerHeight / 2 - (oy + ty)}px`;
       });
     }
 
+    updateTilesRef.current = updateTiles;
     updateTiles();
 
     const el = containerRef.current;
@@ -106,8 +114,14 @@ export default function Canvas({ blocks }: { blocks: ArenaBlock[] }) {
 
     function onWheel(e: WheelEvent) {
       e.preventDefault();
-      pan.current.x -= e.deltaX;
-      pan.current.y -= e.deltaY;
+      if (e.ctrlKey || e.metaKey) {
+        const delta = -e.deltaY * 0.005;
+        zoom.current = Math.min(3, Math.max(0.3, zoom.current + delta));
+        setZoomLevel(zoom.current);
+      } else {
+        pan.current.x -= e.deltaX;
+        pan.current.y -= e.deltaY;
+      }
       updateTiles();
     }
 
@@ -119,8 +133,13 @@ export default function Canvas({ blocks }: { blocks: ArenaBlock[] }) {
     <>
       <div
         ref={containerRef}
-        className="absolute inset-0 overflow-hidden select-none transition-opacity duration-500"
-        style={{ opacity: visible ? 1 : 0 }}
+        className="absolute inset-0 overflow-hidden select-none transition-all duration-500"
+        style={{
+          opacity: visible ? 1 : 0,
+          filter: selectorOpen ? "grayscale(100%)" : "grayscale(0%)",
+          overscrollBehavior: "none",
+          touchAction: "none",
+        }}
         onMouseLeave={() => setHoveredId(null)}
       >
         {ready &&
@@ -174,6 +193,29 @@ export default function Canvas({ blocks }: { blocks: ArenaBlock[] }) {
               })}
             </div>
           ))}
+      </div>
+      <div className="fixed bottom-6 right-6 z-40 flex items-center gap-1 bg-white dark:bg-neutral-900 border border-gray-200 dark:border-neutral-700 rounded-md shadow-sm text-xs overflow-hidden">
+        <button
+          onClick={() => {
+            zoom.current = Math.max(0.3, zoom.current - 0.15);
+            setZoomLevel(zoom.current);
+            updateTilesRef.current?.();
+          }}
+          className="w-7 h-7 flex items-center justify-center text-gray-500 hover:text-black dark:hover:text-white transition-colors"
+        >
+          −
+        </button>
+        <span className="w-10 text-center text-gray-400 select-none">{Math.round(zoomLevel * 100)}%</span>
+        <button
+          onClick={() => {
+            zoom.current = Math.min(3, zoom.current + 0.15);
+            setZoomLevel(zoom.current);
+            updateTilesRef.current?.();
+          }}
+          className="w-7 h-7 flex items-center justify-center text-gray-500 hover:text-black dark:hover:text-white transition-colors"
+        >
+          +
+        </button>
       </div>
       {lightbox && <Lightbox block={lightbox} onClose={() => setLightbox(null)} />}
     </>

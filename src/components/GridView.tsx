@@ -77,7 +77,7 @@ function CategoryCard({
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <span className="text-xs text-gray-400 shrink-0 self-center">{num}.</span>
+      <span className="text-xs text-gray-400 dark:text-gray-500 shrink-0 self-center">{num}.</span>
       <div className="flex flex-col items-center">
         <div className="relative" style={{ width: 140, height: 180 }}>
           {cover && (
@@ -91,7 +91,7 @@ function CategoryCard({
               <img
                 src={cover.medium?.src ?? cover.src}
                 alt={name}
-                className="w-full h-full object-cover bg-gray-100"
+                className="w-full h-full object-cover bg-gray-100 dark:bg-neutral-800"
               />
             </div>
           )}
@@ -110,13 +110,14 @@ function CategoryCard({
               <img
                 src={second.medium?.src ?? second.src}
                 alt=""
-                className="w-full h-full object-cover bg-gray-100"
+                className="w-full h-full object-cover bg-gray-100 dark:bg-neutral-800"
               />
             </div>
           )}
         </div>
         <p
-          className="text-sm text-black font-medium text-center tracking-wider mt-5"
+          className="text-2xl text-black dark:text-white text-center mt-5"
+          style={{ fontFamily: "'Bastliga One', cursive" }}
          
         >
           {name}
@@ -139,10 +140,10 @@ function CategoryDetail({
 
   return (
     <>
-      <div className="h-full overflow-y-auto bg-white px-8 pt-4 pb-20">
+      <div className="h-full overflow-y-auto bg-white dark:bg-neutral-950 px-8 pt-4 pb-20">
         <button
           onClick={onBack}
-          className="text-sm text-gray-400 hover:text-black transition-colors mb-6 flex items-center gap-1"
+          className="text-sm text-gray-400 hover:text-black dark:hover:text-white transition-colors mb-6 flex items-center gap-1"
          
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -151,8 +152,8 @@ function CategoryDetail({
           Back to categories
         </button>
         <h2
-          className="text-2xl font-bold text-black mb-8 text-center"
-         
+          className="text-3xl text-black dark:text-white mb-8 text-center"
+          style={{ fontFamily: "'Bastliga One', cursive" }}
         >
           {name}
         </h2>
@@ -173,7 +174,7 @@ function CategoryDetail({
                 onClick={() => setLightbox(block)}
               >
                 <div
-                  className="relative overflow-hidden bg-gray-50 shadow-md transition-transform duration-300 group-hover:-rotate-1 group-hover:scale-[1.02] w-full mb-3"
+                  className="relative overflow-hidden bg-gray-50 dark:bg-neutral-800 shadow-md transition-transform duration-300 group-hover:-rotate-1 group-hover:scale-[1.02] w-full mb-3"
                   style={{
                     aspectRatio: `${block.image.width} / ${block.image.height}`,
                     maxHeight: 280,
@@ -186,8 +187,7 @@ function CategoryDetail({
                   />
                 </div>
                 <p
-                  className="text-sm text-black font-medium text-center truncate w-full"
-                 
+                  className="text-sm text-black dark:text-white font-medium text-center truncate w-full opacity-0 group-hover:opacity-100 transition-opacity duration-200"
                 >
                   {title.length > 30 ? title.slice(0, 30) + "…" : title}
                 </p>
@@ -238,7 +238,7 @@ export default function GridView({ blocks }: { blocks: ArenaBlock[] }) {
   const row2 = activeCategories.slice(4);
 
   return (
-    <div className="h-full overflow-y-auto bg-white px-12 pt-10 pb-32 transition-opacity duration-500" style={{ opacity: shown ? 1 : 0 }}>
+    <div className="h-full overflow-y-auto bg-white dark:bg-neutral-950 px-12 pt-10 pb-32 transition-opacity duration-500" style={{ opacity: shown ? 1 : 0 }}>
       {/* Row 1 */}
       <div className="grid grid-cols-4 gap-x-24 max-w-5xl mx-auto justify-items-center">
         {row1.map((cat, i) => (
@@ -253,9 +253,9 @@ export default function GridView({ blocks }: { blocks: ArenaBlock[] }) {
       </div>
 
       {/* Filter tabs between rows */}
-      <div className="flex items-center justify-center gap-12 my-20 max-w-5xl mx-auto">
+      <div className="flex items-center justify-center gap-8 my-20 max-w-5xl mx-auto">
         <span
-          className="text-sm text-black underline underline-offset-4"
+          className="text-xs text-black dark:text-white underline underline-offset-4"
          
         >
           All Projects ({String(visible.length).padStart(2, "0")})
@@ -264,7 +264,7 @@ export default function GridView({ blocks }: { blocks: ArenaBlock[] }) {
           <button
             key={cat}
             onClick={() => setSelectedCat(cat)}
-            className="text-sm text-gray-400 hover:text-gray-600 transition-colors"
+            className="text-xs text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
            
           >
             {cat} ({String(categoryMap[cat].length).padStart(2, "0")})

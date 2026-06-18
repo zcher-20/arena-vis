@@ -97,7 +97,7 @@ function Disk({ disk, onSelect }: { disk: DiskInfo; onSelect: () => void }) {
               }}
             />
           )}
-          {!bgUrl && <div className="w-full h-full bg-gray-100" />}
+          {!bgUrl && <div className="w-full h-full bg-gray-100 dark:bg-neutral-800" />}
         </div>
         {/* Faded edge vignette */}
         <div
@@ -120,6 +120,15 @@ function Disk({ disk, onSelect }: { disk: DiskInfo; onSelect: () => void }) {
             background: "repeating-radial-gradient(circle, transparent 0px, transparent 3px, rgba(255,255,255,0.04) 3px, rgba(255,255,255,0.04) 4px)",
           }}
         />
+        {/* Vinyl iridescent sheen */}
+        <div
+          className="absolute inset-0 rounded-full pointer-events-none"
+          style={{
+            background:
+              "conic-gradient(from 0deg, rgba(255,100,100,0.06), rgba(100,255,100,0.06), rgba(100,100,255,0.06), rgba(255,100,255,0.06), rgba(100,255,255,0.06), rgba(255,255,100,0.06), rgba(255,100,100,0.06))",
+            mixBlendMode: "screen",
+          }}
+        />
         {/* Center hole */}
         <div
           className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-7 h-7 rounded-full pointer-events-none"
@@ -137,9 +146,9 @@ function Disk({ disk, onSelect }: { disk: DiskInfo; onSelect: () => void }) {
         />
       </div>
       <div className="text-center">
-        <p className="font-medium text-black text-sm capitalize">{disk.config.name.split(" ").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ")}</p>
+        <p className="font-medium text-black dark:text-white text-sm capitalize">{disk.config.name.split(" ").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ")}</p>
         {disk.meta && (
-          <p className="text-xs text-gray-400">
+          <p className="text-xs text-gray-400 dark:text-gray-500">
             Last Update: {formatDate(disk.meta.updated_at)}
           </p>
         )}
@@ -148,7 +157,21 @@ function Disk({ disk, onSelect }: { disk: DiskInfo; onSelect: () => void }) {
   );
 }
 
-export default function DiskSelector({ onClose }: { onClose: () => void }) {
+export default function DiskSelector({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const [visible, setVisible] = useState(false);
+  const [shown, setShown] = useState(false);
+
+  useEffect(() => {
+    if (open) {
+      setVisible(true);
+      requestAnimationFrame(() => requestAnimationFrame(() => setShown(true)));
+    } else {
+      setShown(false);
+      const t = setTimeout(() => setVisible(false), 300);
+      return () => clearTimeout(t);
+    }
+  }, [open]);
+
   const [disks, setDisks] = useState<DiskInfo[]>(
     CHANNELS.map((c) => ({ config: c, meta: null, imageUrls: [] }))
   );
@@ -180,18 +203,25 @@ export default function DiskSelector({ onClose }: { onClose: () => void }) {
     return () => document.removeEventListener("keydown", onKey);
   }, [onClose]);
 
+  if (!visible) return null;
+
   return (
     <div
-      className="fixed inset-0 z-[90] flex items-center justify-center bg-black/60"
+      className="fixed inset-0 z-[90] flex items-center justify-center transition-colors duration-300"
+      style={{ backgroundColor: shown ? "rgba(0,0,0,0.6)" : "rgba(0,0,0,0)" }}
       onClick={onClose}
     >
       <div
-        className="relative bg-white rounded-2xl p-8 max-w-3xl w-full mx-4 shadow-2xl"
+        className="relative bg-white dark:bg-neutral-900 rounded-2xl p-8 max-w-3xl w-full mx-4 shadow-2xl transition-all duration-300 ease-out"
+        style={{
+          opacity: shown ? 1 : 0,
+          transform: shown ? "translateY(0) scale(1)" : "translateY(20px) scale(0.97)",
+        }}
         onClick={(e) => e.stopPropagation()}
       >
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-colors text-gray-500"
+          className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 dark:bg-neutral-800 hover:bg-gray-200 dark:hover:bg-neutral-700 transition-colors text-gray-500 dark:text-gray-400"
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
@@ -203,19 +233,19 @@ export default function DiskSelector({ onClose }: { onClose: () => void }) {
           </svg>
         </button>
 
-        <h2 className="text-2xl font-bold text-black">Select a disk</h2>
-        <p className="text-base text-gray-400 mb-8 flex items-center gap-3">
+        <h2 className="text-2xl font-bold text-black dark:text-white">Select a disk</h2>
+        <p className="text-[22px] text-gray-700 dark:text-gray-300 font-semibold mb-8 flex items-center gap-3">
           Curated channels by{" "}
           <a
             href="https://zaynebcherif.vercel.app/"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-full transition-colors text-gray-700 text-sm font-medium"
+            className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-gray-100 dark:bg-neutral-700 hover:bg-gray-200 dark:hover:bg-neutral-600 rounded-md transition-colors text-gray-700 dark:text-white text-xs font-medium"
           >
             <img
               src="/profile.jpg"
               alt="Zayneb"
-              className="w-5 h-5 rounded-full object-cover"
+              className="w-4 h-4 rounded-full object-cover"
             />
             Zayneb
           </a>

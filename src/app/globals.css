@@ -1,5 +1,19 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
+
+@font-face {
+  font-family: "Priestacy";
+  src: url("/fonts/Priestacy.otf") format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Bastliga One";
+  src: url("/fonts/Bastliga One.otf") format("opentype");
+  font-display: swap;
+}
 @import "tailwindcss";
+
+@variant dark (&:where(.dark, .dark *));
 
 @theme inline {
   --font-sans: "Inter", sans-serif;
@@ -14,4 +28,5 @@
 
 body {
   font-family: "Inter", sans-serif;
+  overscroll-behavior: none;
 }

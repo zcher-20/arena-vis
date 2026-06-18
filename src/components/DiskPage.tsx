@@ -92,7 +92,7 @@ function Disk({ disk, onSelect }: { disk: DiskInfo; onSelect: () => void }) {
               }}
             />
           )}
-          {!bgUrl && <div className="w-full h-full bg-gray-100" />}
+          {!bgUrl && <div className="w-full h-full bg-gray-100 dark:bg-neutral-800" />}
         </div>
         <div
           className="absolute inset-0 rounded-full pointer-events-none"
@@ -115,6 +115,14 @@ function Disk({ disk, onSelect }: { disk: DiskInfo; onSelect: () => void }) {
           }}
         />
         <div
+          className="absolute inset-0 rounded-full pointer-events-none"
+          style={{
+            background:
+              "conic-gradient(from 0deg, rgba(255,100,100,0.06), rgba(100,255,100,0.06), rgba(100,100,255,0.06), rgba(255,100,255,0.06), rgba(100,255,255,0.06), rgba(255,255,100,0.06), rgba(255,100,100,0.06))",
+            mixBlendMode: "screen",
+          }}
+        />
+        <div
           className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-7 h-7 rounded-full pointer-events-none"
           style={{
             background: "radial-gradient(circle, white 40%, rgba(200,200,200,0.8) 60%, rgba(150,150,150,0.5) 80%, transparent 100%)",
@@ -129,11 +137,11 @@ function Disk({ disk, onSelect }: { disk: DiskInfo; onSelect: () => void }) {
         />
       </div>
       <div className="text-center">
-        <p className="font-medium text-black text-sm">
+        <p className="font-medium text-black dark:text-white text-sm">
           {disk.config.name.split(" ").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ")}
         </p>
         {disk.meta && (
-          <p className="text-xs text-gray-400">
+          <p className="text-xs text-gray-400 dark:text-gray-500">
             Last Update: {formatDate(disk.meta.updated_at)}
           </p>
         )}
@@ -169,19 +177,19 @@ export default function DiskPage({ onSelectDisk }: { onSelectDisk: () => void })
   }, []);
 
   return (
-    <div className="absolute inset-0 flex flex-col items-center justify-center bg-white transition-opacity duration-500" style={{ opacity: visible ? 1 : 0 }}>
-      <h2 className="text-2xl font-bold text-black mb-2">
+    <div className="absolute inset-0 flex flex-col items-center justify-center bg-white dark:bg-neutral-950 transition-opacity duration-500" style={{ opacity: visible ? 1 : 0 }}>
+      <h2 className="text-2xl font-bold text-black dark:text-white mb-0">
         Select a disk
       </h2>
-      <p className="text-base text-gray-400 mb-12 flex items-center gap-3">
+      <p className="text-[22px] text-gray-700 dark:text-gray-300 font-semibold mb-10 flex items-center gap-3">
         Curated channels by{" "}
         <a
           href="https://zaynebcherif.vercel.app/"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-full transition-colors text-gray-700 text-sm font-medium"
+          className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-gray-100 dark:bg-neutral-700 hover:bg-gray-200 dark:hover:bg-neutral-600 rounded-md transition-colors text-gray-700 dark:text-white text-xs font-medium"
         >
-          <img src="/profile.jpg" alt="Zayneb" className="w-5 h-5 rounded-full object-cover" />
+          <img src="/profile.jpg" alt="Zayneb" className="w-4 h-4 rounded-full object-cover" />
           Zayneb
         </a>
       </p>
