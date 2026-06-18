@@ -141,7 +141,7 @@ function Disk({ disk, onSelect }: { disk: DiskInfo; onSelect: () => void }) {
           {disk.config.name.split(" ").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ")}
         </p>
         {disk.meta && (
-          <p className="text-xs text-gray-400 dark:text-gray-500">
+          <p className="text-[10px] text-gray-400 dark:text-gray-500">
             Last Update: {formatDate(disk.meta.updated_at)}
           </p>
         )}
@@ -177,20 +177,16 @@ export default function DiskPage({ onSelectDisk }: { onSelectDisk: () => void })
   }, []);
 
   return (
-    <div className="absolute inset-0 flex flex-col items-center justify-center bg-white dark:bg-neutral-950 transition-opacity duration-500" style={{ opacity: visible ? 1 : 0 }}>
-      <h2 className="text-2xl font-bold text-black dark:text-white mb-0">
-        Select a disk
-      </h2>
-      <p className="text-[22px] text-gray-700 dark:text-gray-300 font-semibold mb-10 flex items-center gap-3">
+    <div className="absolute inset-0 flex flex-col items-center justify-center bg-white dark:bg-neutral-950 transition-opacity duration-500 px-12 overflow-y-auto" style={{ opacity: visible ? 1 : 0 }}>
+      <p className="text-gray-700 dark:text-gray-300 mb-10 w-full text-center" style={{ fontFamily: "'Bastliga One', cursive", fontSize: "5.5rem", lineHeight: 1.1 }}>
         Curated channels by{" "}
         <a
           href="https://zaynebcherif.vercel.app/"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-gray-100 dark:bg-neutral-700 hover:bg-gray-200 dark:hover:bg-neutral-600 rounded-md transition-colors text-gray-700 dark:text-white text-xs font-medium"
+          className="text-gray-700 dark:text-gray-300 hover:text-black dark:hover:text-white transition-colors"
         >
-          <img src="/profile.jpg" alt="Zayneb" className="w-4 h-4 rounded-full object-cover" />
-          Zayneb
+          Zayneb Cherif
         </a>
       </p>
       <div className="flex justify-center gap-10 flex-wrap">

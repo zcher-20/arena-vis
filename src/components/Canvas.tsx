@@ -47,8 +47,8 @@ export default function Canvas({ blocks }: { blocks: ArenaBlock[] }) {
   const [visible, setVisible] = useState(false);
 
   const pan = useRef({ x: 0, y: 0 });
-  const zoom = useRef(0.85);
-  const [zoomLevel, setZoomLevel] = useState(0.85);
+  const zoom = useRef(1);
+  const [zoomLevel, setZoomLevel] = useState(1);
   const updateTilesRef = useRef<(() => void) | null>(null);
   const raf = useRef(0);
 
