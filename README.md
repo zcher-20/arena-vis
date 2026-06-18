@@ -5,7 +5,8 @@ A visual explorer for Are.na (https://www.are.na) channels, built as a portfolio
 
 **Stack:** Next.js 16 (App Router) · TypeScript · Tailwind CSS v4
 
-<img width="710" height="400" alt="Screenshot 2026-06-17 at 9 23 13 PM" src="https://github.com/user-attachments/assets/a7374275-5823-4b9d-b90f-8e3e33a8bcb8" />
+<img width="1188" height="724" alt="Screenshot 2026-06-18 at 2 41 44 AM" src="https://github.com/user-attachments/assets/14e4c1e8-586d-4a0c-880c-08754ef69401" />
+
 
 ---
 
