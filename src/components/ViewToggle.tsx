@@ -10,7 +10,7 @@ export default function ViewToggle({
   onChange: (m: ViewMode) => void;
 }) {
   return (
-    <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex bg-white border border-gray-200 rounded-md shadow-[0_1px_3px_rgba(0,0,0,0.04)] text-xs overflow-hidden" style={{ fontFamily: "'Courier New', Courier, monospace" }}>
+    <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex bg-white border border-gray-200 rounded-md shadow-[0_1px_3px_rgba(0,0,0,0.04)] text-xs overflow-hidden">
       <button
         onClick={() => onChange("disks")}
         className={`w-20 py-1.5 text-center transition-colors ${

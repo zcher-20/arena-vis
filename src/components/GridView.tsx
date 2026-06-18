@@ -77,7 +77,7 @@ function CategoryCard({
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      <span className="text-xs text-gray-400 shrink-0 self-center" style={{ fontFamily: "'Courier New', Courier, monospace" }}>{num}.</span>
+      <span className="text-xs text-gray-400 shrink-0 self-center">{num}.</span>
       <div className="flex flex-col items-center">
         <div className="relative" style={{ width: 140, height: 180 }}>
           {cover && (
@@ -117,7 +117,7 @@ function CategoryCard({
         </div>
         <p
           className="text-sm text-black font-medium text-center tracking-wider mt-5"
-          style={{ fontFamily: "'Courier New', Courier, monospace" }}
+         
         >
           {name}
         </p>
@@ -143,7 +143,7 @@ function CategoryDetail({
         <button
           onClick={onBack}
           className="text-sm text-gray-400 hover:text-black transition-colors mb-6 flex items-center gap-1"
-          style={{ fontFamily: "'Courier New', Courier, monospace" }}
+         
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -152,7 +152,7 @@ function CategoryDetail({
         </button>
         <h2
           className="text-2xl font-bold text-black mb-8 text-center"
-          style={{ fontFamily: "Helvetica, Arial, sans-serif" }}
+         
         >
           {name}
         </h2>
@@ -187,7 +187,7 @@ function CategoryDetail({
                 </div>
                 <p
                   className="text-sm text-black font-medium text-center truncate w-full"
-                  style={{ fontFamily: "'Courier New', Courier, monospace" }}
+                 
                 >
                   {title.length > 30 ? title.slice(0, 30) + "…" : title}
                 </p>
@@ -256,7 +256,7 @@ export default function GridView({ blocks }: { blocks: ArenaBlock[] }) {
       <div className="flex items-center justify-center gap-12 my-20 max-w-5xl mx-auto">
         <span
           className="text-sm text-black underline underline-offset-4"
-          style={{ fontFamily: "'Courier New', Courier, monospace" }}
+         
         >
           All Projects ({String(visible.length).padStart(2, "0")})
         </span>
@@ -265,7 +265,7 @@ export default function GridView({ blocks }: { blocks: ArenaBlock[] }) {
             key={cat}
             onClick={() => setSelectedCat(cat)}
             className="text-sm text-gray-400 hover:text-gray-600 transition-colors"
-            style={{ fontFamily: "'Courier New', Courier, monospace" }}
+           
           >
             {cat} ({String(categoryMap[cat].length).padStart(2, "0")})
           </button>

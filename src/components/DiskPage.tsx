@@ -129,11 +129,11 @@ function Disk({ disk, onSelect }: { disk: DiskInfo; onSelect: () => void }) {
         />
       </div>
       <div className="text-center">
-        <p className="font-medium text-black text-sm" style={{ fontFamily: "Helvetica, Arial, sans-serif" }}>
+        <p className="font-medium text-black text-sm">
           {disk.config.name.split(" ").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ")}
         </p>
         {disk.meta && (
-          <p className="text-xs text-gray-400" style={{ fontFamily: "Helvetica, Arial, sans-serif" }}>
+          <p className="text-xs text-gray-400">
             Last Update: {formatDate(disk.meta.updated_at)}
           </p>
         )}
@@ -170,10 +170,10 @@ export default function DiskPage({ onSelectDisk }: { onSelectDisk: () => void })
 
   return (
     <div className="absolute inset-0 flex flex-col items-center justify-center bg-white transition-opacity duration-500" style={{ opacity: visible ? 1 : 0 }}>
-      <h2 className="text-2xl font-bold text-black mb-2" style={{ fontFamily: "Helvetica, Arial, sans-serif" }}>
+      <h2 className="text-2xl font-bold text-black mb-2">
         Select a disk
       </h2>
-      <p className="text-base text-gray-400 mb-12 flex items-center gap-3" style={{ fontFamily: "Helvetica, Arial, sans-serif" }}>
+      <p className="text-base text-gray-400 mb-12 flex items-center gap-3">
         Curated channels by{" "}
         <a
           href="https://zaynebcherif.vercel.app/"

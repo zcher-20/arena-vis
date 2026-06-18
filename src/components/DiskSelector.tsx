@@ -203,8 +203,8 @@ export default function DiskSelector({ onClose }: { onClose: () => void }) {
           </svg>
         </button>
 
-        <h2 className="text-2xl font-bold text-black" style={{ fontFamily: "Helvetica, Arial, sans-serif" }}>Select a disk</h2>
-        <p className="text-base text-gray-400 mb-8 flex items-center gap-3" style={{ fontFamily: "Helvetica, Arial, sans-serif" }}>
+        <h2 className="text-2xl font-bold text-black">Select a disk</h2>
+        <p className="text-base text-gray-400 mb-8 flex items-center gap-3">
           Curated channels by{" "}
           <a
             href="https://zaynebcherif.vercel.app/"

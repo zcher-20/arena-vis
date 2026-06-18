@@ -12,7 +12,7 @@ export default function Navbar({ currentChannel }: { currentChannel?: string }) 
   return (
     <>
       <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-center py-3 bg-white/80 backdrop-blur-sm">
-        <div className="flex items-center gap-1 text-xs bg-white border border-gray-200 rounded-md px-3 py-1.5 shadow-[0_1px_3px_rgba(0,0,0,0.04)]" style={{ fontFamily: "'Courier New', Courier, monospace" }}>
+        <div className="flex items-center gap-1 text-xs bg-white border border-gray-200 rounded-md px-3 py-1.5 shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
           <a
             href={ARENA_HOME_URL}
             target="_blank"
